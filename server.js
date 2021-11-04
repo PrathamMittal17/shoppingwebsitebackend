@@ -109,8 +109,8 @@ app.post("/cartitem",(req,res)=>{
   })
 
 app.post("/getitemcartstatus",(req,res)=>{
-  const {productId,customerId} = req.body;
-  db('cart').select('cart_status').where("customer_id","=",customerId).where("product_id","=",productId)
+  const {customerId} = req.body;
+  db('cart').select('cart_status','product_id').where("customer_id","=",customerId)
   .then(data=>res.json(data))
   .catch(err=>res.status(400).json("error"))
 })
@@ -168,8 +168,8 @@ app.post("/create-checkout-session",async (req,res)=>{
       },
     ],
     mode: 'payment',
-    success_url: 'https://prathammittal17.github.io/shoppingwebsite/#/orderdone',
-    cancel_url: 'https://prathammittal17.github.io/shoppingwebsite/',
+    success_url: 'http://localhost:3000/orderdone',
+    cancel_url: 'http://localhost:3000/',
   })
   .then(data=>res.json(data))
   
