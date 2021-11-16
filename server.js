@@ -176,8 +176,8 @@ app.post("/create-checkout-session",async (req,res)=>{
       },
     ],
     mode: 'payment',
-    success_url: 'http://localhost:3000/orderdone',
-    cancel_url: 'http://localhost:3000/',
+    success_url: 'https://prathammittal17.github.io/shoppingwebsite/#/orderdone',
+    cancel_url: 'https://prathammittal17.github.io/shoppingwebsite/#/',
   })
   .then(data=>res.json(data))
   
