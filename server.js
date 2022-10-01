@@ -3,7 +3,7 @@ var cors = require('cors')
 const app = express();
 const knex = require('knex');
 const bcrypt = require('bcrypt');
-const stripe = require('stripe')('sk_test_51JmIXVSBM1qtXmvlyXGlNlHTUdpBOG4i2D01PoSDICL0X2nlC4JmIu4PnhoKhLecpSM8BsbxMtebkXzKbjJS6Ix500Vty5WNKv')
+const stripe = require('stripe')(process.env.STRIPE_API_KEY)
 const PORT = process.env.PORT || 5001;
 
 app.use(cors())
