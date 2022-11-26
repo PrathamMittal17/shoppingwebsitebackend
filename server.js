@@ -14,14 +14,12 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
 const db = knex({
                     client: 'pg',
                     connection: {
-                    connectionString : process.env.DATABASE_URL,
+                    connectionString : process.env.DATABASE_URL || 'postgres://shopping-website-backend-main-db-0719d121ef9687c7a:%3AJ_Wy!twg%3F%26Jgq-%3Du)%3F*@user-prod-us-east-2-1.cluster-cfi5vnucvv3w.us-east-2.rds.amazonaws.com:5432/shopping-website-backend-main-db-0719d121ef9687c7a',
                     ssl:true,
                     }
                 });
 
                 
-  
-
 app.get("/",(req,res)=>{
     res.send('Working');
 })
@@ -186,6 +184,29 @@ app.post('/gettingOrder',(req,res)=>{
   db("orders").select('*').where('cust_id','=',custId.custId).orderBy('date','desc')
   .then(data=>res.json(data))
 })
+
+app.post("/recommend",(req,res)=>{
+  const {productId} = req.body;
+  db("recommendations").select('product1','product2','product3','product4','product5').where('product_id','=',productId)
+  .then(data=>res.json(data[0]))
+  .catch(err=>res.status(400).json("No Product Found"))
+});
+
+app.post("/getProductDetailsHalf",(req,res)=>{
+  const{productId} = req.body;
+  db("products").select('product_name','price','img').where('product_id','=',productId)
+  .then(data=>res.json(data[0]))
+  .catch(err=>res.status(400).json("No Product Found"))
+});
+
+app.post("/getProductDetailsFull",(req,res)=>{
+  const{productId} = req.body;
+  db("products").select('product_name','price','img','about').where('product_id','=',productId)
+  .then(data=>res.json(data[0]))
+  .catch(err=>res.status(400).json("No Product Found"))
+});
+
+
 
 
 app.listen(PORT,()=>{
