@@ -14,7 +14,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
 const db = knex({
                     client: 'pg',
                     connection: {
-                    connectionString : process.env.DATABASE_URL || 'postgres://shopping-website-backend-main-db-0719d121ef9687c7a:%3AJ_Wy!twg%3F%26Jgq-%3Du)%3F*@user-prod-us-east-2-1.cluster-cfi5vnucvv3w.us-east-2.rds.amazonaws.com:5432/shopping-website-backend-main-db-0719d121ef9687c7a',
+                    connectionString : process.env.DATABASE_URL,
                     ssl:true,
                     }
                 });
