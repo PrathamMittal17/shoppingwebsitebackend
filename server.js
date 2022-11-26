@@ -10,7 +10,6 @@ app.use(cors())
 app.use(express.json());
 
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = 1
 const db = knex({
                     client: 'pg',
                     connection: {
@@ -185,26 +184,26 @@ app.post('/gettingOrder',(req,res)=>{
   .then(data=>res.json(data))
 })
 
-app.post("/recommend",(req,res)=>{
-  const {productId} = req.body;
-  db("recommendations").select('product1','product2','product3','product4','product5').where('product_id','=',productId)
-  .then(data=>res.json(data[0]))
-  .catch(err=>res.status(400).json("No Product Found"))
-});
+// app.post("/recommend",(req,res)=>{
+//   const {productId} = req.body;
+//   db("recommendations").select('product1','product2','product3','product4','product5').where('product_id','=',productId)
+//   .then(data=>res.json(data[0]))
+//   .catch(err=>res.status(400).json("No Product Found"))
+// });
 
-app.post("/getProductDetailsHalf",(req,res)=>{
-  const{productId} = req.body;
-  db("products").select('product_name','price','img').where('product_id','=',productId)
-  .then(data=>res.json(data[0]))
-  .catch(err=>res.status(400).json("No Product Found"))
-});
+// app.post("/getProductDetailsHalf",(req,res)=>{
+//   const{productId} = req.body;
+//   db("products").select('product_name','price','img').where('product_id','=',productId)
+//   .then(data=>res.json(data[0]))
+//   .catch(err=>res.status(400).json("No Product Found"))
+// });
 
-app.post("/getProductDetailsFull",(req,res)=>{
-  const{productId} = req.body;
-  db("products").select('product_name','price','img','about').where('product_id','=',productId)
-  .then(data=>res.json(data[0]))
-  .catch(err=>res.status(400).json("No Product Found"))
-});
+// app.post("/getProductDetailsFull",(req,res)=>{
+//   const{productId} = req.body;
+//   db("products").select('product_name','price','img','about').where('product_id','=',productId)
+//   .then(data=>res.json(data[0]))
+//   .catch(err=>res.status(400).json("No Product Found"))
+// });
 
 
 
