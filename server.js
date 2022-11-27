@@ -193,14 +193,14 @@ app.post("/recommend",(req,res)=>{
 
 app.post("/getProductDetailsHalf",(req,res)=>{
   const{productId} = req.body;
-  db("products").select('product_name','price','img').where('product_id','=',productId)
+  db("products").select('product_id','product_name','price','img').where('product_id','=',productId)
   .then(data=>res.json(data[0]))
   .catch(err=>res.status(400).json("No Product Found"))
 });
 
 app.post("/getProductDetailsFull",(req,res)=>{
   const{productId} = req.body;
-  db("products").select('product_name','price','img','about').where('product_id','=',productId)
+  db("products").select('product_id','product_name','price','img','about').where('product_id','=',productId)
   .then(data=>res.json(data[0]))
   .catch(err=>res.status(400).json("No Product Found"))
 });
