@@ -98,7 +98,7 @@ app.post("/cart",(req,res)=>{
 // display items in cart 
 app.post("/cartitem",(req,res)=>{
   const {customerId} = req.body;
-  db('products').join('cart','cart.product_id','products.product_id').select('product_name','price','img','cart_item_id','cart.qty').where('cart.customer_id','=',customerId).orderBy('price','desc')
+  db('products').join('cart','cart.product_id','products.product_id').select('product_name','price','img','cart_item_id','cart.qty').where('cart.customer_id','=',customerId)
   .then(data=>res.json(data))
   })
 
