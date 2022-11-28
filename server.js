@@ -13,7 +13,7 @@ app.use(express.json());
 const db = knex({
                     client: 'pg',
                     connection: {
-                    connectionString : process.env.DATABASE_URL,
+                    connectionString : process.env.DATABASE_URL ,
                     ssl:true,
                     }
                 });
@@ -26,7 +26,7 @@ app.get("/",(req,res)=>{
 //PRODUCTS
 
 app.get("/products",(req,res)=>{
-    db.select('*').from('products').orderBy("product_id").then(product=>res.json(product));
+    db.select('product_id','product_name','price','img').from('products').orderBy("product_id").then(product=>res.json(product));
 })
 
 
@@ -105,7 +105,14 @@ app.post("/cartitem",(req,res)=>{
 app.post("/getitemcartstatus",(req,res)=>{
   const {customerId,productId} = req.body;
   db('cart').select('cart_status').where("customer_id","=",customerId).where("product_id",'=',productId)
-  .then(data=>res.json(data[0]))
+  .then(data=>{
+    if(data!=''){
+      res.json(data[0])
+    }
+    else{
+      res.json('F')
+    }
+  })
   .catch(err=>res.status(400).json("error"))
 })
 
