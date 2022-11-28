@@ -103,9 +103,9 @@ app.post("/cartitem",(req,res)=>{
   })
 
 app.post("/getitemcartstatus",(req,res)=>{
-  const {customerId} = req.body;
-  db('cart').select('cart_status','product_id').where("customer_id","=",customerId)
-  .then(data=>res.json(data))
+  const {customerId,productId} = req.body;
+  db('cart').select('cart_status').where("customer_id","=",customerId).where("product_id",'=',productId)
+  .then(data=>res.json(data[0]))
   .catch(err=>res.status(400).json("error"))
 })
 
@@ -211,5 +211,3 @@ app.post("/getProductDetailsFull",(req,res)=>{
 app.listen(PORT,()=>{
     console.log('App is running on port ' + PORT);
 })
-
-
