@@ -26,7 +26,7 @@ app.get("/",(req,res)=>{
 //PRODUCTS
 
 app.get("/products",(req,res)=>{
-    db.select('product_id','product_name','price','img').from('products').orderBy("product_id").then(product=>res.json(product));
+    db.select('product_id','product_name','price','img','category').from('products').orderBy("product_id").then(product=>res.json(product));
 })
 
 
@@ -99,6 +99,7 @@ app.post("/cart",(req,res)=>{
 app.post("/cartitem",(req,res)=>{
   const {customerId} = req.body;
   db('products').join('cart','cart.product_id','products.product_id').select('product_name','price','img','cart_item_id','cart.qty').where('cart.customer_id','=',customerId)
+  .orderBy("price")
   .then(data=>res.json(data))
   })
 
@@ -214,7 +215,7 @@ app.post("/getProductDetailsFull",(req,res)=>{
 
 app.post("/productscategorywise",(req,res)=>{
   const{category} = req.body;
-  db.select('product_id','product_name','price','img').from('products').where('category','=',category).orderBy("product_id").then(product=>res.json(product));
+  db.select('product_id','product_name','price','img','category').from('products').where('category','=',category).orderBy("product_id").then(product=>res.json(product));
 })
 
 
