@@ -87,7 +87,7 @@ app.post("/register",(req,res)=>{
 // insert into cart 
 app.post("/cart",(req,res)=>{
   const {productId,customerId,status} = req.body;
-  db.insert({customer_id:customerId,product_id:productId,cart_status:status})
+  db.insert({customer_id:customerId,product_id:productId,cart_status:status,time_added:new Date()})
   .into('cart')
   .returning(['product_id','customer_id'])
   .then(data=>res.json(data));
@@ -99,7 +99,7 @@ app.post("/cart",(req,res)=>{
 app.post("/cartitem",(req,res)=>{
   const {customerId} = req.body;
   db('products').join('cart','cart.product_id','products.product_id').select('product_name','price','img','cart_item_id','cart.qty').where('cart.customer_id','=',customerId)
-  .orderBy("price")
+  .orderBy("time_added")
   .then(data=>res.json(data))
   })
 
