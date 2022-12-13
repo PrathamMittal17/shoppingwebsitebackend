@@ -13,7 +13,7 @@ app.use(express.json());
 const db = knex({
                     client: 'pg',
                     connection: {
-                    connectionString : process.env.DATABASE_URL,
+                    connectionString : process.env.DATABASE_URL  ,
                     ssl:true,
                     }
                 });
@@ -221,7 +221,15 @@ app.post("/productscategorywise",(req,res)=>{
 app.post("/getAddresses",(req,res)=>{
   const{userId} = req.body;
   db("login").select('addresses').where('id','=',userId)
-  .then(data=>res.json(data[0].addresses))
+  .then(data=>{
+    if(data[0]===undefined || data[0].addresses===null){
+      res.json("none")
+    }
+    else{
+      res.json(data[0].addresses)
+    }
+
+  })
 })
 
 app.post("/addAddress",(req,res)=>{
