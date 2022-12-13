@@ -13,7 +13,7 @@ app.use(express.json());
 const db = knex({
                     client: 'pg',
                     connection: {
-                    connectionString : process.env.DATABASE_URL  ,
+                    connectionString : process.env.DATABASE_URL,
                     ssl:true,
                     }
                 });
@@ -223,7 +223,7 @@ app.post("/getAddresses",(req,res)=>{
   db("login").select('addresses').where('id','=',userId)
   .then(data=>{
     if(data[0]===undefined || data[0].addresses===null){
-      res.json("none")
+      res.json([])
     }
     else{
       res.json(data[0].addresses)
