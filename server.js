@@ -13,7 +13,7 @@ app.use(express.json());
 const db = knex({
                     client: 'pg',
                     connection: {
-                    connectionString : process.env.DATABASE_URL ,
+                    connectionString : process.env.DATABASE_URL,
                     ssl:true,
                     }
                 });
@@ -217,6 +217,19 @@ app.post("/productscategorywise",(req,res)=>{
   const{category} = req.body;
   db.select('product_id','product_name','price','img','category').from('products').where('category','=',category).orderBy("product_id").then(product=>res.json(product));
 })
+
+app.post("/getAddresses",(req,res)=>{
+  const{userId} = req.body;
+  db("login").select('addresses').where('id','=',userId)
+  .then(data=>res.json(data[0].addresses))
+})
+
+app.post("/addAddress",(req,res)=>{
+  const {userId,address} = req.body;
+  db('login').where('id','=', userId).update({addresses: db.raw('array_append(addresses, ?)', [address])})
+  .then(data=>res.json("done"))
+})
+
 
 
 
