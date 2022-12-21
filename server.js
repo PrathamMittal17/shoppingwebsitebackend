@@ -148,8 +148,8 @@ app.put("/carttotalitems",(req,res)=>{
   .then(data=>res.json(data))
   }
   else if(operation=="E"){
-    db("login").where("id","=",customerId).update({"cart_items":0})
-  .then(res.json("empty"))
+    db("login").where("id","=",customerId).update({"cart_items":0}).returning("cart_items")
+  .then(data=>res.json(data))
   }
 
 })
