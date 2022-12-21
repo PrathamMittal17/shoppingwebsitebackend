@@ -138,7 +138,7 @@ app.put("/updatecartitemqty",(req,res)=>{
 
 app.put("/carttotalitems",(req,res)=>{
   const {customerId,operation} = req.body;
-
+  
   if(operation=="I"){
   db("login").where("id","=",customerId).increment("cart_items",1).returning("cart_items")
   .then(data=>res.json(data))
@@ -146,6 +146,10 @@ app.put("/carttotalitems",(req,res)=>{
   else if(operation=="D"){
     db("login").where("id","=",customerId).decrement("cart_items",1).returning("cart_items")
   .then(data=>res.json(data))
+  }
+  else if(operation=="E"){
+    db("login").where("id","=",customerId).update({"cart_items":0})
+  .then(res.json("empty"))
   }
 
 })
