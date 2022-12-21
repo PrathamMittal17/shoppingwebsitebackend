@@ -103,6 +103,12 @@ app.post("/cartitem",(req,res)=>{
   .then(data=>res.json(data))
   })
 
+app.delete("/deleteCart",(req,res)=>{
+  const{user_id} = req.body;
+  db("cart").del().where("customer_id",'=',user_id)
+  .then(res.json("deleted"))
+})
+
 app.post("/getitemcartstatus",(req,res)=>{
   const {customerId,productId} = req.body;
   db('cart').select('cart_status').where("customer_id","=",customerId).where("product_id",'=',productId)
