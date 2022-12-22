@@ -225,7 +225,7 @@ app.post("/getProductDetailsFull",(req,res)=>{
 
 app.post("/productscategorywise",(req,res)=>{
   const{category} = req.body;
-  db.select('product_id','product_name','price','img','category').from('products').where('category','=',category).orderBy("product_id").then(product=>res.json(product));
+  db.select('product_id','product_name','price','img','category').from('products').where('category','=',category).orderBy("price").then(product=>res.json(product));
 })
 
 app.post("/getAddresses",(req,res)=>{
