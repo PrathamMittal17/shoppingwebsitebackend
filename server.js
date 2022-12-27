@@ -26,7 +26,7 @@ app.get("/",(req,res)=>{
 //PRODUCTS
 
 app.get("/products",(req,res)=>{
-    db.select('product_id','product_name','price','img','category').from('products').orderBy("product_id").then(product=>res.json(product));
+    db.select('product_id','product_name','price','img','category').from('products').then(product=>res.json(product));
 })
 
 
